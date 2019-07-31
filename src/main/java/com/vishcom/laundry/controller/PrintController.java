@@ -43,13 +43,13 @@ public class PrintController {
 
         if(request != null && request.getInvoices() != null && request.getInvoices().size() > 0) {
             for (OrderCreateResponseList.InvoiceData invoice : request.getInvoices()) {
-                //pdfBillPrint(invoice);
-                try {
+                pdfBillPrint(invoice);
+                /*try {
                     billPrint(invoice);
                 } catch (PrinterException e) {
                     e.printStackTrace();
                     statusResponse.setStatus("Failed");
-                }
+                }*/
             }
             statusResponse.setStatus("Success");
         } else {
@@ -108,15 +108,18 @@ public class PrintController {
 
     private void billPrint(OrderCreateResponseList.InvoiceData invoice) throws PrinterException {
 
-        PrinterJob pj = PrinterJob.getPrinterJob();
-        PageFormat format = pj.getPageFormat(null);
+        PrintService myPrintService = findPrintService("EPSON-LQ-300");
+
+        PrinterJob job = PrinterJob.getPrinterJob();
+        PageFormat format = job.getPageFormat(null);
         Paper paper = format.getPaper();
         //Remove borders from the paper
         paper.setImageableArea(0.0, 0.0, format.getPaper().getWidth(), format.getPaper().getHeight());
         format.setPaper(paper);
 
 
-        PrinterJob job = PrinterJob.getPrinterJob();
+
+        job.setPrintService(myPrintService);
         job.setPrintable(new Printer(invoice),format);
         //boolean doPrint = job.printDialog();
         //if (doPrint) {
@@ -328,8 +331,10 @@ public class PrintController {
 
     public static void print(String path) throws PrinterException, IOException {
 
-        /*System.out.println("path :"+path);
         PDDocument document = PDDocument.load(new File(path));
+        printWithPaper(document);
+        /*System.out.println("path :"+path);
+
 
         PrintService myPrintService = findPrintService("LQ-300-");
 
@@ -362,6 +367,31 @@ public class PrintController {
         }*/
 
     }
+
+    private static void printWithPaper(PDDocument document)
+            throws IOException, PrinterException
+    {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPageable(new PDFPageable(document));
+
+        // define custom paper
+        Paper paper = new Paper();
+        paper.setSize(306, 396); // 1/72 inch
+        paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight()); // no margins
+
+        // custom page format
+        PageFormat pageFormat = new PageFormat();
+        pageFormat.setPaper(paper);
+
+        // override the page format
+        Book book = new Book();
+        // append all pages
+        book.append(new PDFPrintable(document), pageFormat, document.getNumberOfPages());
+        job.setPageable(book);
+
+        job.print();
+    }
+
 
 
     private static PrintService findPrintService(String printerName) {
