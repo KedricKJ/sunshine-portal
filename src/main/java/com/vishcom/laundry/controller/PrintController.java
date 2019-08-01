@@ -43,13 +43,13 @@ public class PrintController {
 
         if(request != null && request.getInvoices() != null && request.getInvoices().size() > 0) {
             for (OrderCreateResponseList.InvoiceData invoice : request.getInvoices()) {
-                pdfBillPrint(invoice);
-                /*try {
+                //pdfBillPrint(invoice);
+                try {
                     billPrint(invoice);
                 } catch (PrinterException e) {
                     e.printStackTrace();
                     statusResponse.setStatus("Failed");
-                }*/
+                }
             }
             statusResponse.setStatus("Success");
         } else {
@@ -108,7 +108,7 @@ public class PrintController {
 
     private void billPrint(OrderCreateResponseList.InvoiceData invoice) throws PrinterException {
 
-        PrintService myPrintService = findPrintService("EPSON-LQ-300");
+        PrintService myPrintService = findPrintService("EPSON LQ-300+ /II ESC/P 2");
 
         PrinterJob job = PrinterJob.getPrinterJob();
         PageFormat format = job.getPageFormat(null);
@@ -187,7 +187,7 @@ public class PrintController {
     }
 
     private void pdfBillPrint(OrderCreateResponseList.InvoiceData invoice) {
-        String path ="/home/nuwan/Desktop/QR/"+invoice.getId()+".pdf";
+        String path ="C:\\Users\\EF\\Desktop\\nuwan\\sunshine-portal\\pdf\\"+invoice.getId()+".pdf";
         Document document = new Document(PageSize.A5,1,30,1,1);
 
         try {
