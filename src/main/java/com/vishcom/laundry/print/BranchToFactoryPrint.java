@@ -35,9 +35,9 @@ public class BranchToFactoryPrint implements Printable {
         Graphics2D g2d = (Graphics2D)graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
-        int startX = 30;
+        int startX = 0;
         int startY = 100;
-        int gap=50;
+        int gap=80;
 
 
         if(invoices != null && invoices.size() > 0) {
@@ -51,7 +51,7 @@ public class BranchToFactoryPrint implements Printable {
                 graphics.drawString(""+invoice.getTotalQuantity(), startX, startY);
                 startX = startX + gap;
                 graphics.drawString(""+invoice.getServiceType(), startX, startY);
-                startY = startY + 10;
+                startY = startY + 20;
             }
 
         }

@@ -38,18 +38,20 @@ public class PrintController {
     public StatusResponse saveOrderAndPrint(@RequestBody OrderCreateResponseList request ) {
 
         log.info("request :{}",request);
+        log.info("request :{}",request.getInvoices().size());
 
         StatusResponse statusResponse = new StatusResponse();
 
         if(request != null && request.getInvoices() != null && request.getInvoices().size() > 0) {
             for (OrderCreateResponseList.InvoiceData invoice : request.getInvoices()) {
-                pdfBillPrint(invoice);
-                /*try {
+                //pdfBillPrint(invoice);
+                log.info("invoiceid :{}",invoice.getId());
+                try {
                     billPrint(invoice);
                 } catch (PrinterException e) {
                     e.printStackTrace();
                     statusResponse.setStatus("Failed");
-                }*/
+                }
             }
             statusResponse.setStatus("Success");
         } else {
@@ -68,9 +70,9 @@ public class PrintController {
         log.info("invoices date =>{}",request.getInvoices());
         log.info("invoice size =>{}",request.getInvoices().size());
 
-        pdfBranchPrint(request.getInvoices());
+        //pdfBranchPrint(request.getInvoices());
 
-        /*try {
+        try {
             PrinterJob job = PrinterJob.getPrinterJob();
             job.setPrintable(new BranchToFactoryPrint(request.getInvoices()));
             job.print();
@@ -78,7 +80,7 @@ public class PrintController {
         } catch (Exception e) {
             e.printStackTrace();
             statusResponse.setStatus("Failed");
-        }*/
+        }
 
         statusResponse.setStatus("Success");
 
@@ -108,7 +110,7 @@ public class PrintController {
 
     private void billPrint(OrderCreateResponseList.InvoiceData invoice) throws PrinterException {
 
-        PrintService myPrintService = findPrintService("EPSON-LQ-300");
+        //PrintService myPrintService = findPrintService("EPSON LQ-300+ /II ESC/P 2");
 
         PrinterJob job = PrinterJob.getPrinterJob();
         PageFormat format = job.getPageFormat(null);
@@ -119,7 +121,7 @@ public class PrintController {
 
 
 
-        job.setPrintService(myPrintService);
+        //job.setPrintService(myPrintService);
         job.setPrintable(new Printer(invoice),format);
         //boolean doPrint = job.printDialog();
         //if (doPrint) {
@@ -187,7 +189,7 @@ public class PrintController {
     }
 
     private void pdfBillPrint(OrderCreateResponseList.InvoiceData invoice) {
-        String path ="/home/nuwan/Desktop/QR/"+invoice.getId()+".pdf";
+        String path ="C:\\Users\\EF\\Desktop\\nuwan\\sunshine-portal\\pdf\\"+invoice.getId()+".pdf";
         Document document = new Document(PageSize.A5,1,30,1,1);
 
         try {

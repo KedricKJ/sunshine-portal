@@ -45,7 +45,7 @@ public class Printer implements Printable {
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 
         startX = 60;
-        startY = 10;
+        startY = 130;
         //startY = 142;
 
 
