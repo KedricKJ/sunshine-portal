@@ -17,7 +17,9 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-		<jar.file.name>messanger</jar.file.name>
+		<jar.file.name>sunshine-portal</jar.file.name>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
 	<dependencies>
@@ -80,7 +82,24 @@
 
 	<build>
 		<finalName>${jar.file.name}</finalName>
+
+
 		<plugins>
+
+			<plugin>
+				<!-- Build an executable JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.vishcom.laundry.SunshinePortalApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
 			<!--create executable jar-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -90,25 +109,18 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>3.6.1</version>
 				<configuration>
-					<release>11</release>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<!-- update compiler plugin dependency on ASM for Java 11 compatibility -->
-						<groupId>org.ow2.asm</groupId>
-						<artifactId>asm</artifactId>
-						<version>6.2</version>
-					</dependency>
-				</dependencies>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>
-						--illegal-access=permit
+						&#45;&#45;illegal-access=permit
 					</argLine>
 				</configuration>
 			</plugin>
@@ -117,11 +129,12 @@
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
 					<argLine>
-						--illegal-access=permit
+						&#45;&#45;illegal-access=permit
 					</argLine>
 				</configuration>
-			</plugin>
+			</plugin>-->
 			<!-- Added for JAVA 11 Support END-->
+
 		</plugins>
 	</build>
 
