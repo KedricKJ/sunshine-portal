@@ -55,8 +55,8 @@ public class Printer implements Printable {
         //startYInvoiceNum =145;
         startXInvoiceNum =startX + 245;
 
-        customerYInvoice = startY + 25;
-        customerXInvoice = startX + 8;
+        customerYInvoice = startY + 15;
+        customerXInvoice = startX + 5;
 
         orderItemYInvoice = startY + 95;
         orderItemXInvoice = startX;
@@ -112,7 +112,7 @@ public class Printer implements Printable {
 
                 orderItemXInvoice = startX;
 
-                graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-45);
+                graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-30);
 
 
                 graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice);
