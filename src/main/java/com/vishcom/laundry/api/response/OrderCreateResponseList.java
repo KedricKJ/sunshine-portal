@@ -58,6 +58,7 @@ public class OrderCreateResponseList {
 
         private BigDecimal extraCharge;
 
+        private String paymentStatus;
 
 
 

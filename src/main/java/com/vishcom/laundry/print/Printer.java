@@ -55,7 +55,7 @@ public class Printer implements Printable {
         //startYInvoiceNum =145;
         startXInvoiceNum =startX + 245;
 
-        customerYInvoice = startY + 15;
+        customerYInvoice = startY + 20;
         customerXInvoice = startX + 5;
 
         orderItemYInvoice = startY + 95;
@@ -165,15 +165,31 @@ public class Printer implements Printable {
                 graphics.drawString("Issued Hangers : "+invoice.getIssuedHanger() * 9 +"("+invoice.getIssuedHanger()+")", orderItemXInvoice, orderItemYInvoice);
             }
 
-            if(invoice.getDiscount() != null) {
+            if(invoice.getDiscount() != null && invoice.getDiscount().signum() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
                 graphics.drawString("Discount : " + (invoice.getDiscount()), orderItemXInvoice, orderItemYInvoice);
             }
 
-            if(invoice.getExtraCharge() != null) {
+            if(invoice.getExtraCharge() != null && invoice.getExtraCharge().signum() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
                 graphics.drawString("Extra charge : " + invoice.getExtraCharge(), orderItemXInvoice, orderItemYInvoice);
             }
+
+            if(invoice.getPayments() != null && invoice.getPayments().size() > 0) {
+
+                BigDecimal totalPayment = new BigDecimal(0.0);
+                for(OrderCreateResponseList.InvoiceData.PaymentData paymentData : invoice.getPayments()) {
+                    totalPayment = totalPayment.add(paymentData.getAmount());
+                }
+                orderItemYInvoice = orderItemYInvoice + gap;
+                graphics.drawString("Payments: " + totalPayment, orderItemXInvoice, orderItemYInvoice);
+                if(invoice.getPaymentStatus() != null) {
+                    graphics.drawString("Payment Status: " + invoice.getPaymentStatus(), orderItemXInvoice, orderItemYInvoice);
+                }
+
+            }
+
+
             orderItemYInvoice = orderItemYInvoice + 40;
             graphics.drawString("Total Qty : "+invoice.getTotalQuantity(), orderItemXInvoice, orderItemYInvoice);
             orderItemYInvoice = orderItemYInvoice + gap;
