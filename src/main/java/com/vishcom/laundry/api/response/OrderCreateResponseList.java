@@ -147,6 +147,7 @@ public class OrderCreateResponseList {
 
         @Data
         public static class CustomerData {
+
             private Long id;
 
             private String address;

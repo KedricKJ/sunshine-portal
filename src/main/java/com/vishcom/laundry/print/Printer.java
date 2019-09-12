@@ -32,6 +32,8 @@ public class Printer implements Printable {
     int gap=0;
     int distanceX = 0;
 
+    int gapX = 260;
+
 
     public Printer(OrderCreateResponseList.InvoiceData invoice) {
         this.invoice = invoice;
@@ -125,34 +127,52 @@ public class Printer implements Printable {
             orderItemXInvoice = startX;
             if(invoice.getReturnHanger() != null && invoice.getReturnHanger() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
-                graphics.drawString("Return Hangers : ", orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+240;
+                graphics.drawString("Return Hangers : ", startX, orderItemYInvoice);
+                orderItemXInvoice= startX+gapX;
                 graphics.drawString(invoice.getReturnHangerAmount() +"("+invoice.getReturnHanger()+")", orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice = startX;
+                //orderItemXInvoice = startX;
             }
             if(invoice.getIssuedHanger() != null && invoice.getIssuedHanger() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
-                graphics.drawString("Issued Hangers : ", orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+240;
+                graphics.drawString("Issued Hangers : ", startX, orderItemYInvoice);
+                orderItemXInvoice= startX+gapX;
                 graphics.drawString(invoice.getIssuedHangerAmount() +"("+invoice.getIssuedHanger()+")", orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice = startX;
+                //orderItemXInvoice = startX;
             }
 
             if(invoice.getDiscount() != null && invoice.getDiscount().signum() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
-                graphics.drawString("Discount : ", orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+240;
+                graphics.drawString("Discount : ", startX, orderItemYInvoice);
+                orderItemXInvoice= startX+gapX;
                 graphics.drawString("" + invoice.getDiscount(), orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice = startX;
+                //orderItemXInvoice = startX;
             }
 
             if(invoice.getExtraCharge() != null && invoice.getExtraCharge().signum() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
-                graphics.drawString("Extra charge : ", orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+240;
+                graphics.drawString("Extra charge : ", startX, orderItemYInvoice);
+                orderItemXInvoice= startX+gapX;
                 graphics.drawString("" + invoice.getExtraCharge(), orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice = startX;
+                //orderItemXInvoice = startX;
             }
+
+
+            orderItemYInvoice = orderItemYInvoice + 40;
+            graphics.drawString("Total Qty", startX, orderItemYInvoice);
+            orderItemXInvoice= startX+gapX;
+            graphics.drawString(""+invoice.getTotalQuantity(), orderItemXInvoice, orderItemYInvoice);
+            orderItemYInvoice = orderItemYInvoice + gap;
+
+            graphics.drawString("Gross Total", startX, orderItemYInvoice);
+            orderItemXInvoice= startX+gapX;
+            graphics.drawString(""+invoice.getGrossTotal(), orderItemXInvoice, orderItemYInvoice);
+
+            orderItemYInvoice = orderItemYInvoice + gap;
+            graphics.drawString("Total", startX, orderItemYInvoice);
+
+            orderItemXInvoice= startX+gapX;
+            graphics.drawString(""+invoice.getNetAmount(), orderItemXInvoice, orderItemYInvoice);
+            orderItemXInvoice = startX;
 
             if(invoice.getPayments() != null && invoice.getPayments().size() > 0) {
 
@@ -160,20 +180,19 @@ public class Printer implements Printable {
                 for(OrderCreateResponseList.InvoiceData.PaymentData paymentData : invoice.getPayments()) {
                     totalPayment = totalPayment.add(paymentData.getAmount());
                 }
-                orderItemYInvoice = orderItemYInvoice + gap;
-                graphics.drawString("Payments: " + totalPayment, orderItemXInvoice, orderItemYInvoice);
+                orderItemYInvoice = orderItemYInvoice + gap + gap;
+                graphics.drawString("Payments: ", startX, orderItemYInvoice);
+                orderItemXInvoice= startX+gapX;
+                graphics.drawString("" + totalPayment, orderItemXInvoice, orderItemYInvoice);
                 if(invoice.getPaymentStatus() != null) {
-                    graphics.drawString("Payment Status: " + invoice.getPaymentStatus(), orderItemXInvoice, orderItemYInvoice);
+                    orderItemYInvoice = orderItemYInvoice + gap;
+                    graphics.drawString("Payment Status", startX, orderItemYInvoice);
+                    orderItemXInvoice= startX+gapX;
+                    graphics.drawString("" + invoice.getPaymentStatus(), orderItemXInvoice, orderItemYInvoice);
                 }
+                //orderItemXInvoice = startX;
 
             }
-            orderItemYInvoice = orderItemYInvoice + 40;
-            graphics.drawString("Total Qty : "+invoice.getTotalQuantity(), orderItemXInvoice, orderItemYInvoice);
-            orderItemYInvoice = orderItemYInvoice + gap;
-            graphics.drawString("Gross Total    : "+invoice.getGrossTotal(), orderItemXInvoice+distanceX, orderItemYInvoice);
-
-            orderItemYInvoice = orderItemYInvoice + gap;
-            graphics.drawString("Total          : "+invoice.getNetAmount(), orderItemXInvoice+distanceX, orderItemYInvoice);
 
         }
 
