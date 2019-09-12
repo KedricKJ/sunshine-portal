@@ -50,6 +50,10 @@ public class OrderCreateResponseList {
 
         private Integer issuedHanger;
 
+        private BigDecimal returnHangerAmount;
+
+        private BigDecimal issuedHangerAmount;
+
         private String deliveryDate;
 
         private String createdDate;
