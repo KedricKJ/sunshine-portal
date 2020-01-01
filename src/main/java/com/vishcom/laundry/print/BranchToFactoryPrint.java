@@ -50,7 +50,8 @@ public class BranchToFactoryPrint implements Printable {
                 startX = startX + gap;
                 graphics.drawString(""+invoice.getTotalQuantity(), startX, startY);
                 startX = startX + gap;
-                graphics.drawString(""+invoice.getServiceType(), startX, startY);
+                if(invoice.getType() != null)
+                    graphics.drawString(""+invoice.getType(), startX, startY);
                 startY = startY + 20;
             }
 

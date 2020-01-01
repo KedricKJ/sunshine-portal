@@ -18,7 +18,7 @@ public class InvoicePrintFactoryRequest {
 
         private Integer totalQuantity;
 
-        private String serviceType;
+        private String type;
 
         private Integer hangerPkt;
 

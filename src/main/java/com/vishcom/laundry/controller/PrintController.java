@@ -150,7 +150,7 @@ public class PrintController {
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getId().toString()));
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getCustomerCode().toString()));
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getTotalQuantity().toString()));
-                    pdfBranchTableInvoice.addCell(createTextCell(invoice.getServiceType().toString()));
+                    pdfBranchTableInvoice.addCell(createTextCell(invoice.getType().toString()));
                 }
             }
             document.add(pdfBranchTableInvoice);
@@ -175,7 +175,7 @@ public class PrintController {
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getId().toString()));
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getCustomerCode().toString()));
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getTotalQuantity().toString()));
-                    pdfBranchTableInvoice.addCell(createTextCell(invoice.getServiceType().toString()));
+                    pdfBranchTableInvoice.addCell(createTextCell(invoice.getType().toString()));
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getFolderPkt().toString()));
                     pdfBranchTableInvoice.addCell(createTextCell(invoice.getHangerPkt().toString()));
                 }

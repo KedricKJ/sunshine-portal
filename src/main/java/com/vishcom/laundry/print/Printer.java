@@ -47,7 +47,7 @@ public class Printer implements Printable {
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 
         startX = 60;
-        startY = 130;
+        startY = 120;
         //startY = 142;
 
 
@@ -86,7 +86,8 @@ public class Printer implements Printable {
 
 
         //startYInvoice = startYInvoice + gap;
-        graphics.drawString("INV :"+invoice.getId(), startXInvoiceNum, startY);
+        graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-70, startY);
+        //graphics.drawString("Ord no :"+invoice.getId(), startXInvoiceNum, startY);
 
         graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice);
         customerYInvoice = customerYInvoice + gap;
@@ -107,6 +108,13 @@ public class Printer implements Printable {
             graphics.drawString(""+invoice.getCustomer().getEmail(), customerXInvoice, customerYInvoice);
             //startY = startY + 10;
         }
+
+        /*if(invoice.getCustomer() != null) {
+            customerYInvoice = customerYInvoice + gap;
+            graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), customerXInvoice, customerYInvoice);
+        }*/
+
+
         customerYInvoice = customerYInvoice + gap;
         if(invoice.getOrderItems() != null &invoice.getOrderItems().size() > 0) {
 
@@ -114,7 +122,7 @@ public class Printer implements Printable {
 
                 orderItemXInvoice = startX;
 
-                graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-30);
+                graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-15);
                 graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice);
                 orderItemXInvoice= orderItemXInvoice+40;
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
@@ -188,7 +196,14 @@ public class Printer implements Printable {
                     orderItemYInvoice = orderItemYInvoice + gap;
                     graphics.drawString("Payment Status", startX, orderItemYInvoice);
                     orderItemXInvoice= startX+gapX;
-                    graphics.drawString("" + invoice.getPaymentStatus(), orderItemXInvoice, orderItemYInvoice);
+                    if(invoice.getPaymentStatus().equalsIgnoreCase("PA")) {
+                        graphics.drawString("" + "PAID", orderItemXInvoice, orderItemYInvoice);
+                    } else if(invoice.getPaymentStatus().equalsIgnoreCase("AD")) {
+                        graphics.drawString("" + "ADVANCE", orderItemXInvoice, orderItemYInvoice);
+                    } else if(invoice.getPaymentStatus().equalsIgnoreCase("PE")) {
+                        graphics.drawString("" + "PENDING", orderItemXInvoice, orderItemYInvoice);
+                    }
+
                 }
                 //orderItemXInvoice = startX;
 
@@ -196,23 +211,26 @@ public class Printer implements Printable {
 
         }
 
-        if(invoice.getBranch() != null) {
-            //footerYInvoice = startSecodY + 40;
-            graphics.drawString("Branch : "+invoice.getBranch(), footerXInvoice, footerYInvoice);
-        }
+
                 /*startY = startY + 20;
                 graphics.drawString("BRANCH INVO :"+invoice.getBranch(), startX, startY);*/
 
+
+        footerYInvoice = footerYInvoice + gap;
+        //graphics.drawString("W/Plant Mattegoda", footerXInvoice, footerYInvoice);
+        //footerYInvoice = footerYInvoice + gap;
+        //graphics.drawString("Vat Reg No : 114676101-7000", footerXInvoice, footerYInvoice);
+        //footerYInvoice = footerYInvoice + gap + gap;
+        graphics.drawString(invoice.getType(), footerXInvoice, footerYInvoice);
+        if(invoice.getBranch() != null) {
+            footerYInvoice = footerYInvoice + gap;
+            graphics.drawString("Branch : "+invoice.getBranch(), footerXInvoice, footerYInvoice);
+        }
+
         if(invoice.getCustomer() != null) {
             footerYInvoice = footerYInvoice + gap;
-            graphics.drawString("Your ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
+            graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
         }
-        footerYInvoice = footerYInvoice + gap;
-        graphics.drawString("W/Plant Mattegoda", footerXInvoice, footerYInvoice);
-        footerYInvoice = footerYInvoice + gap;
-        graphics.drawString("Vat Reg No : 114676101-7000", footerXInvoice, footerYInvoice);
-        footerYInvoice = footerYInvoice + gap + gap;
-        graphics.drawString(invoice.getType(), footerXInvoice, footerYInvoice);
 
         return PAGE_EXISTS;
     }

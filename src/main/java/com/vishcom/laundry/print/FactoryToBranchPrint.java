@@ -51,7 +51,8 @@ public class FactoryToBranchPrint implements Printable {
                 startX = startX + gap;
                 graphics.drawString(""+invoice.getTotalQuantity(), startX, startY);
                 startX = startX + gap;
-                graphics.drawString(""+invoice.getServiceType(), startX, startY);
+                if(invoice.getType() != null)
+                    graphics.drawString(""+invoice.getType(), startX, startY);
                 if(invoice.getHangerPkt() !=null) {
                     startX = startX + gap;
                     graphics.drawString(""+invoice.getHangerPkt(), startX, startY);
