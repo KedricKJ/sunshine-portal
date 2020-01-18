@@ -46,8 +46,8 @@ public class Printer implements Printable {
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 
-        startX = 60;
-        startY = 120;
+        startX = 28;
+        startY = 137;
         //startY = 142;
 
 
@@ -67,7 +67,7 @@ public class Printer implements Printable {
         footerXInvoice = startX;
 
         gap=15;
-        distanceX = 170;
+        distanceX = 175;
 
         if (pageIndex > 0) {
             return NO_SUCH_PAGE;
@@ -94,7 +94,11 @@ public class Printer implements Printable {
         graphics.drawString(""+invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
 
         if(invoice.getCreatedDate() != null) {
-            graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice);
+            graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-15);
+        }
+
+        if(invoice.getCreatedDate() != null) {
+            graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-15);
         }
 
         if(invoice.getCustomer().getAddress() != null) {
@@ -126,9 +130,9 @@ public class Printer implements Printable {
                 graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice);
                 orderItemXInvoice= orderItemXInvoice+40;
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+190;
+                orderItemXInvoice= orderItemXInvoice+180;
                 graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+30;
+                orderItemXInvoice= orderItemXInvoice+45;
                 graphics.drawString(""+ orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice);
                 orderItemYInvoice = orderItemYInvoice + gap;
             }
@@ -192,6 +196,13 @@ public class Printer implements Printable {
                 graphics.drawString("Payments: ", startX, orderItemYInvoice);
                 orderItemXInvoice= startX+gapX;
                 graphics.drawString("" + totalPayment, orderItemXInvoice, orderItemYInvoice);
+
+                orderItemYInvoice = orderItemYInvoice + gap + gap;
+                graphics.drawString("Balance Payment: ", startX, orderItemYInvoice);
+                orderItemXInvoice= startX+gapX;
+                graphics.drawString("" + invoice.getNetAmount().subtract(totalPayment), orderItemXInvoice, orderItemYInvoice);
+
+
                 if(invoice.getPaymentStatus() != null) {
                     orderItemYInvoice = orderItemYInvoice + gap;
                     graphics.drawString("Payment Status", startX, orderItemYInvoice);
@@ -217,10 +228,6 @@ public class Printer implements Printable {
 
 
         footerYInvoice = footerYInvoice + gap;
-        //graphics.drawString("W/Plant Mattegoda", footerXInvoice, footerYInvoice);
-        //footerYInvoice = footerYInvoice + gap;
-        //graphics.drawString("Vat Reg No : 114676101-7000", footerXInvoice, footerYInvoice);
-        //footerYInvoice = footerYInvoice + gap + gap;
         graphics.drawString(invoice.getType(), footerXInvoice, footerYInvoice);
         if(invoice.getBranch() != null) {
             footerYInvoice = footerYInvoice + gap;
