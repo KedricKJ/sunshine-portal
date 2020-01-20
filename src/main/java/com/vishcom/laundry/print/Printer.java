@@ -130,13 +130,33 @@ public class Printer implements Printable {
                 graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice);
                 orderItemXInvoice= orderItemXInvoice+40;
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+180;
+                // FOLDPACK("FOLDPACK","FP"),NOCREASE("NOCREASE","NC"),ONHANGER("ONHANGER","OH"),WITHCREASE("WITHCREASE","WC"),SEPARATEPACK("SEPARATEPACK","SP");
+
+                System.out.println("invoice.getReturnType -->"+orderItem.getReturnType());
+                orderItemXInvoice= orderItemXInvoice+60;
+                if(orderItem.getReturnType() != null) {
+
+                    if(orderItem.getReturnType().equalsIgnoreCase("FP")) {
+                        graphics.drawString("" + "FOLDPACK", orderItemXInvoice, orderItemYInvoice);
+                    } else if(orderItem.getReturnType().equalsIgnoreCase("NC")) {
+                        graphics.drawString("" + "NOCREASE", orderItemXInvoice, orderItemYInvoice);
+                    } else if(orderItem.getReturnType().equalsIgnoreCase("OH")) {
+                        graphics.drawString("" + "ONHANGER", orderItemXInvoice, orderItemYInvoice);
+                    } else if(orderItem.getReturnType().equalsIgnoreCase("WC")) {
+                        graphics.drawString("" + "WITHCREASE", orderItemXInvoice, orderItemYInvoice);
+                    }else if(orderItem.getReturnType().equalsIgnoreCase("SP")) {
+                        graphics.drawString("" + "SEPARATEPACK", orderItemXInvoice, orderItemYInvoice);
+                    }
+
+                }
+                orderItemXInvoice= orderItemXInvoice+120;
                 graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
                 orderItemXInvoice= orderItemXInvoice+45;
                 graphics.drawString(""+ orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice);
                 orderItemYInvoice = orderItemYInvoice + gap;
             }
             orderItemXInvoice = startX;
+            System.out.println("invoice.getReturnHanger -->"+invoice.getReturnHanger());
             if(invoice.getReturnHanger() != null && invoice.getReturnHanger() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
                 graphics.drawString("Return Hangers : ", startX, orderItemYInvoice);
@@ -144,6 +164,7 @@ public class Printer implements Printable {
                 graphics.drawString(invoice.getReturnHangerAmount() +"("+invoice.getReturnHanger()+")", orderItemXInvoice, orderItemYInvoice);
                 //orderItemXInvoice = startX;
             }
+            System.out.println("invoice.getIssuedHanger -->"+invoice.getIssuedHanger());
             if(invoice.getIssuedHanger() != null && invoice.getIssuedHanger() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
                 graphics.drawString("Issued Hangers : ", startX, orderItemYInvoice);
@@ -152,6 +173,7 @@ public class Printer implements Printable {
                 //orderItemXInvoice = startX;
             }
 
+            System.out.println("invoice.getDiscount -->"+invoice.getDiscount());
             if(invoice.getDiscount() != null && invoice.getDiscount().signum() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
                 graphics.drawString("Discount : ", startX, orderItemYInvoice);
@@ -159,6 +181,8 @@ public class Printer implements Printable {
                 graphics.drawString("" + invoice.getDiscount(), orderItemXInvoice, orderItemYInvoice);
                 //orderItemXInvoice = startX;
             }
+
+            System.out.println("invoice.getExtraCharge -->"+invoice.getExtraCharge());
 
             if(invoice.getExtraCharge() != null && invoice.getExtraCharge().signum() != 0) {
                 orderItemYInvoice = orderItemYInvoice + gap;
@@ -202,6 +226,8 @@ public class Printer implements Printable {
                 orderItemXInvoice= startX+gapX;
                 graphics.drawString("" + invoice.getNetAmount().subtract(totalPayment), orderItemXInvoice, orderItemYInvoice);
 
+
+                System.out.println("invoice.getPaymentStatus -->"+invoice.getPaymentStatus());
 
                 if(invoice.getPaymentStatus() != null) {
                     orderItemYInvoice = orderItemYInvoice + gap;

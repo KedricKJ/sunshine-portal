@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
 import org.apache.pdfbox.printing.PDFPrintable;
-import org.apache.pdfbox.printing.Scaling;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.PrintService;
@@ -237,10 +236,14 @@ public class PrintController {
 
             extraInfo.setSpacingBefore(5);
 
+            log.info("invoice.getReturnHanger --> {}",invoice.getReturnHanger());
+
             if(invoice.getReturnHanger() != null && invoice.getReturnHanger() != 0) {
                 extraInfo.addCell(createTextCell("Return Hangers :"+invoice.getReturnHanger() * 3 +"("+invoice.getReturnHanger()+")"));
                 //extraInfo.addCell(createTextCell();
             }
+
+            log.info("invoice.getIssuedHanger --> {}",invoice.getIssuedHanger());
             if(invoice.getIssuedHanger() != null && invoice.getIssuedHanger() != 0) {
                 extraInfo.addCell(createTextCell("Issued Hangers :"+invoice.getIssuedHanger() * 9 +"("+invoice.getIssuedHanger()+")"));
 
