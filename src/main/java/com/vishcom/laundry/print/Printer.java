@@ -224,7 +224,8 @@ public class Printer implements Printable {
                 orderItemYInvoice = orderItemYInvoice + gap + gap;
                 graphics.drawString("Balance Payment: ", startX, orderItemYInvoice);
                 orderItemXInvoice= startX+gapX;
-                graphics.drawString("" + invoice.getNetAmount().subtract(totalPayment), orderItemXInvoice, orderItemYInvoice);
+                graphics.drawString("" + invoice.getRemainAmount(), orderItemXInvoice, orderItemYInvoice);
+                //graphics.drawString("" + invoice.getNetAmount().subtract(totalPayment), orderItemXInvoice, orderItemYInvoice);
 
 
                 System.out.println("invoice.getPaymentStatus -->"+invoice.getPaymentStatus());

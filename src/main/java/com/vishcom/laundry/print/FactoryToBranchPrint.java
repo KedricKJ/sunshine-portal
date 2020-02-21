@@ -44,25 +44,27 @@ public class FactoryToBranchPrint implements Printable {
 
             for (InvoicePrintRequest.InvoiceData invoice:invoices) {
 
-                startX = 30;
+                startX = 10;
                 graphics.drawString(""+invoice.getId(), startX, startY);
                 startX = startX + gap;
                 graphics.drawString(""+invoice.getCustomerCode(), startX, startY);
-                startX = startX + gap;
+                startX = startX + gap+40;
                 graphics.drawString(""+invoice.getTotalQuantity(), startX, startY);
-                startX = startX + gap;
-                if(invoice.getType() != null)
+                if(invoice.getType() != null) {
+                    startX = startX + 20;
                     graphics.drawString(""+invoice.getType(), startX, startY);
+                }
+
                 if(invoice.getHangerPkt() !=null) {
-                    startX = startX + gap;
+                    startX = startX + gap+gap+gap+gap+40;
                     graphics.drawString(""+invoice.getHangerPkt(), startX, startY);
                 }
                 if(invoice.getFolderPkt() !=null) {
-                    startX = startX + gap;
+                    startX = startX + 20;
                     graphics.drawString(""+invoice.getFolderPkt(), startX, startY);
                 }
 
-                startY = startY + 10;
+                startY = startY + 15;
             }
 
         }
