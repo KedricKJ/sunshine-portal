@@ -11,7 +11,7 @@ public class Printer implements Printable {
 
     private OrderCreateResponseList.InvoiceData invoice;
 
-    int startX = 0;
+    int startX = 5;
     int startY = 0;
 
     //int startYInvoice = 0;
@@ -20,11 +20,11 @@ public class Printer implements Printable {
     //int startYInvoiceNum = 0;
     int startXInvoiceNum = 0;
 
-    int customerYInvoice = 0;
+    int customerYInvoice = 2;
     int customerXInvoice = 0;
 
-    int orderItemYInvoice = 0;
-    int orderItemXInvoice = 0;
+    int orderItemYInvoice = 10;
+    int orderItemXInvoice = 5;
 
     int footerYInvoice = 0;
     int footerXInvoice = 0;
@@ -46,8 +46,8 @@ public class Printer implements Printable {
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 
-        startX = 28;
-        startY = 137;
+        startX = 35;
+        startY = 150;
         //startY = 142;
 
 
@@ -60,7 +60,7 @@ public class Printer implements Printable {
         customerYInvoice = startY + 20;
         customerXInvoice = startX + 5;
 
-        orderItemYInvoice = startY + 95;
+        orderItemYInvoice = startY + 105;
         orderItemXInvoice = startX;
 
         footerYInvoice = startY + 300;
@@ -86,10 +86,10 @@ public class Printer implements Printable {
 
 
         //startYInvoice = startYInvoice + gap;
-        graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-70, startY);
+        graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-70, startY+8);
         //graphics.drawString("Ord no :"+invoice.getId(), startXInvoiceNum, startY);
 
-        graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice);
+        graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice+5);
         customerYInvoice = customerYInvoice + gap;
         graphics.drawString(""+invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
 
@@ -128,7 +128,7 @@ public class Printer implements Printable {
 
                 graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-15);
                 graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+40;
+                orderItemXInvoice= orderItemXInvoice+50;
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
                 // FOLDPACK("FOLDPACK","FP"),NOCREASE("NOCREASE","NC"),ONHANGER("ONHANGER","OH"),WITHCREASE("WITHCREASE","WC"),SEPARATEPACK("SEPARATEPACK","SP");
 
@@ -264,6 +264,30 @@ public class Printer implements Printable {
         if(invoice.getCustomer() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
+        }
+
+        if(invoice.getRemainFocAmount() != null) {
+            footerYInvoice = footerYInvoice + gap;
+            graphics.drawString("FOC Amount : "+invoice.getRemainFocAmount(), footerXInvoice, footerYInvoice);
+        }
+
+        if(invoice.getFreeWash() != null) {
+            footerYInvoice = footerYInvoice + gap;
+            graphics.drawString("Free Wash : "+invoice.getFreeWash(), footerXInvoice, footerYInvoice);
+        }
+
+        if(invoice.getColor() != null) {
+            footerYInvoice = footerYInvoice + gap;
+            graphics.drawString("Color : "+invoice.getColor(), footerXInvoice, footerYInvoice);
+        }
+
+        if(invoice.getDamageType() != null) {
+            footerYInvoice = footerYInvoice + gap;
+            graphics.drawString("Damage Type : "+invoice.getDamageType(), footerXInvoice, footerYInvoice);
+        }
+        if(invoice.getDamageLocation() != null) {
+            footerYInvoice = footerYInvoice + gap;
+            graphics.drawString("Damage Location : "+invoice.getDamageLocation(), footerXInvoice, footerYInvoice);
         }
 
         return PAGE_EXISTS;

@@ -33,6 +33,7 @@ public class PrintController {
 
     Font f=new Font(Font.FontFamily.COURIER,9.0f,Font.NORMAL, BaseColor.BLACK);
 
+    @CrossOrigin(origins = "*")
     @PostMapping("${app.endpoint.ordersPrint}")
     public StatusResponse saveOrderAndPrint(@RequestBody OrderCreateResponseList request ) {
 
@@ -44,7 +45,8 @@ public class PrintController {
         if(request != null && request.getInvoices() != null && request.getInvoices().size() > 0) {
             for (OrderCreateResponseList.InvoiceData invoice : request.getInvoices()) {
                 //pdfBillPrint(invoice);
-                log.info("invoiceid :{}",invoice.getId());
+                log.info("invoice  :{}",invoice.getId());
+                log.info("invoice foc amount :{}",invoice.getRemainFocAmount());
                 try {
                     billPrint(invoice);
                 } catch (PrinterException e) {

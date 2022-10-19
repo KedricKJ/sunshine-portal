@@ -64,6 +64,16 @@ public class OrderCreateResponseList {
 
         private String paymentStatus;
 
+        private BigDecimal remainFocAmount;
+
+        private Integer freeWash=0;
+
+        private String color;
+
+        private String damageType;
+
+        private String damageLocation;
+
 
 
         @Data
