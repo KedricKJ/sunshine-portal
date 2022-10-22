@@ -89,8 +89,11 @@ public class Printer implements Printable {
         graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-70, startY+8);
         //graphics.drawString("Ord no :"+invoice.getId(), startXInvoiceNum, startY);
 
-        graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice+5);
-        customerYInvoice = customerYInvoice + gap;
+        if(invoice.getCustomer().getName() != null) {
+            graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice+5);
+            customerYInvoice = customerYInvoice + gap;
+        }
+
         graphics.drawString(""+invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
 
         if(invoice.getCreatedDate() != null) {
@@ -132,7 +135,7 @@ public class Printer implements Printable {
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
                 // FOLDPACK("FOLDPACK","FP"),NOCREASE("NOCREASE","NC"),ONHANGER("ONHANGER","OH"),WITHCREASE("WITHCREASE","WC"),SEPARATEPACK("SEPARATEPACK","SP");
 
-                System.out.println("invoice.getReturnType -->"+orderItem.getReturnType());
+
                 orderItemXInvoice= orderItemXInvoice+60;
                 if(orderItem.getReturnType() != null) {
 
@@ -228,7 +231,7 @@ public class Printer implements Printable {
                 //graphics.drawString("" + invoice.getNetAmount().subtract(totalPayment), orderItemXInvoice, orderItemYInvoice);
 
 
-                System.out.println("invoice.getPaymentStatus -->"+invoice.getPaymentStatus());
+
 
                 if(invoice.getPaymentStatus() != null) {
                     orderItemYInvoice = orderItemYInvoice + gap;
@@ -265,12 +268,12 @@ public class Printer implements Printable {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
         }
-
+        System.out.println("invoice.getRemainFocAmount -->"+invoice.getRemainFocAmount());
         if(invoice.getRemainFocAmount() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("FOC Amount : "+invoice.getRemainFocAmount(), footerXInvoice, footerYInvoice);
         }
-
+        System.out.println("invoice.getFreeWash -->"+invoice.getFreeWash());
         if(invoice.getFreeWash() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Free Wash : "+invoice.getFreeWash(), footerXInvoice, footerYInvoice);

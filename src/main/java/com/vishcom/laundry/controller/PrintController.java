@@ -5,12 +5,14 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.vishcom.laundry.api.response.MobileOrderCreateResponseList;
 import com.vishcom.laundry.api.response.OrderCreateResponseList;
 import com.vishcom.laundry.dto.request.InvoicePrintFactoryRequest;
 import com.vishcom.laundry.dto.request.InvoicePrintRequest;
 import com.vishcom.laundry.dto.response.StatusResponse;
 import com.vishcom.laundry.print.BranchToFactoryPrint;
 import com.vishcom.laundry.print.FactoryToBranchPrint;
+import com.vishcom.laundry.print.MobilePrint;
 import com.vishcom.laundry.print.Printer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -34,7 +36,7 @@ public class PrintController {
     Font f=new Font(Font.FontFamily.COURIER,9.0f,Font.NORMAL, BaseColor.BLACK);
 
     @CrossOrigin(origins = "*")
-    @PostMapping("${app.endpoint.ordersPrint}")
+    //@PostMapping("${app.endpoint.ordersPrint}")
     public StatusResponse saveOrderAndPrint(@RequestBody OrderCreateResponseList request ) {
 
         log.info("request :{}",request);
@@ -49,6 +51,39 @@ public class PrintController {
                 log.info("invoice foc amount :{}",invoice.getRemainFocAmount());
                 try {
                     billPrint(invoice);
+                } catch (PrinterException e) {
+                    e.printStackTrace();
+                    statusResponse.setStatus("Failed");
+                }
+            }
+            statusResponse.setStatus("Success");
+        } else {
+            statusResponse.setStatus("Print Failed");
+        }
+
+
+        return  statusResponse;
+    }
+
+    @CrossOrigin(origins = "*")
+    //@PostMapping("${app.endpoint.mobileOrdersPrint}")
+    @PostMapping("${app.endpoint.ordersPrint}")
+    public StatusResponse printMobileOrder(@RequestBody MobileOrderCreateResponseList request ) {
+
+        log.info("request :{}",request);
+        log.info("request :{}",request.getInvoices().size());
+
+        StatusResponse statusResponse = new StatusResponse();
+
+        if(request != null && request.getInvoices() != null && request.getInvoices().size() > 0) {
+
+            for (MobileOrderCreateResponseList.InvoiceData invoice : request.getInvoices()) {
+
+                log.info("invoice  :{}",invoice.getId());
+                log.info("invoice foc amount :{}",invoice.getRemainFocAmount());
+                try {
+                    mobileBillPrint(invoice);
+
                 } catch (PrinterException e) {
                     e.printStackTrace();
                     statusResponse.setStatus("Failed");
@@ -135,6 +170,23 @@ public class PrintController {
         }
         //}
 
+    }
+
+    private void mobileBillPrint(MobileOrderCreateResponseList.InvoiceData invoice) throws PrinterException {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        PageFormat format = job.getPageFormat(null);
+        Paper paper = format.getPaper();
+        //Remove borders from the paper
+        paper.setImageableArea(0.0, 0.0, format.getPaper().getWidth(), format.getPaper().getHeight());
+        format.setPaper(paper);
+        job.setPrintable(new MobilePrint(invoice),format);
+        try {
+            log.info("invoices :"+"printing ...");
+            job.print();
+            log.info("invoices :"+"printed ...");
+        } catch (PrinterException e) {
+            e.printStackTrace();
+        }
     }
 
     private void pdfBranchPrint(List<InvoicePrintRequest.InvoiceData> invoices) {
