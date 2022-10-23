@@ -29,14 +29,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @Slf4j
 @RestController
 public class PrintController {
 
     Font f=new Font(Font.FontFamily.COURIER,9.0f,Font.NORMAL, BaseColor.BLACK);
 
-    @CrossOrigin(origins = "*")
-    //@PostMapping("${app.endpoint.ordersPrint}")
+
+    @PostMapping("${app.endpoint.ordersPrint}")
     public StatusResponse saveOrderAndPrint(@RequestBody OrderCreateResponseList request ) {
 
         log.info("request :{}",request);
@@ -65,9 +66,8 @@ public class PrintController {
         return  statusResponse;
     }
 
-    @CrossOrigin(origins = "*")
-    //@PostMapping("${app.endpoint.mobileOrdersPrint}")
-    @PostMapping("${app.endpoint.ordersPrint}")
+    @PostMapping("${app.endpoint.mobileOrdersPrint}")
+    //@PostMapping("${app.endpoint.ordersPrint}")
     public StatusResponse printMobileOrder(@RequestBody MobileOrderCreateResponseList request ) {
 
         log.info("request :{}",request);

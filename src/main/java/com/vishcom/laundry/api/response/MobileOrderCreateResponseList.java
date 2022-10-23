@@ -18,7 +18,7 @@ public class MobileOrderCreateResponseList {
     private Long id;
 
     //concat with service type and order type with customer primary id
-    private String customerCode;
+    //private String customerCode;
 
     private Set<OrderItemData> orderItems= new HashSet<>();
 
@@ -38,23 +38,23 @@ public class MobileOrderCreateResponseList {
 
     private BigDecimal remainAmount;
 
-    private Integer hangerPkt;
+    //private Integer hangerPkt;
 
-    private Integer folderPkt;
+    //private Integer folderPkt;
 
     private String status;
 
     private Set<PaymentData> payments;
 
-    private Integer returnHanger;
+    //private Integer returnHanger;
 
-    private Integer issuedHanger;
+    //private Integer issuedHanger;
 
-    private BigDecimal returnHangerAmount;
+    //private BigDecimal returnHangerAmount;
 
-    private BigDecimal issuedHangerAmount;
+    //private BigDecimal issuedHangerAmount;
 
-    private String deliveryDate;
+    //private String deliveryDate;
 
     private String createdDate;
 
@@ -100,7 +100,6 @@ public class MobileOrderCreateResponseList {
 
       private String deliveryTime;
 
-
       private String deliveryType;
 
       private String paymentType;
@@ -113,7 +112,6 @@ public class MobileOrderCreateResponseList {
 
       @Data
       public static class ItemData  {
-
 
         private String id;
 
@@ -160,11 +158,11 @@ public class MobileOrderCreateResponseList {
 
       private Long id;
 
-      private String address;
+      //private String address;
 
       private String username;
 
-      private String mobile;
+      //private String mobile;
 
       private String email;
 

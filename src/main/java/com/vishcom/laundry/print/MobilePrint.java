@@ -35,8 +35,8 @@ public class MobilePrint implements Printable {
   public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
       throws PrinterException {
 
-    startX = 35;
-    startY = 150;
+    startX = 70;
+    startY = 155;
 
     startXInvoiceNum = startX + 245;
 
@@ -50,19 +50,19 @@ public class MobilePrint implements Printable {
     footerXInvoice = startX;
 
     gap = 15;
-    distanceX = 175;
+    distanceX = 140;
 
     if (pageIndex > 0) {
       return NO_SUCH_PAGE;
     }
     Paper paper = pageFormat.getPaper();
     // Remove borders from the paper
-    // paper.setImageableArea(30.0, 10.0, 500, 500);
+    //paper.setImageableArea(0.0, 0.0, 500, 500);
     pageFormat.setPaper(paper);
     Graphics2D g2d = (Graphics2D) graphics;
     g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
-    graphics.drawString("Order receipt :" + invoice.getId(), startXInvoiceNum - 70, startY + 8);
+    graphics.drawString("Order receipt :" + invoice.getId(), startXInvoiceNum - 100, startY + 8);
 
     if (invoice.getCustomer().getUsername() != null) {
       graphics.drawString(
@@ -70,24 +70,24 @@ public class MobilePrint implements Printable {
       customerYInvoice = customerYInvoice + gap;
     }
 
-    graphics.drawString("" + invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
+    //graphics.drawString("" + invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
+
+    /*if (invoice.getCreatedDate() != null) {
+      graphics.drawString(
+          invoice.getCreatedDate(), customerXInvoice + distanceX, customerYInvoice - 15);
+    }*/
 
     if (invoice.getCreatedDate() != null) {
       graphics.drawString(
           invoice.getCreatedDate(), customerXInvoice + distanceX, customerYInvoice - 15);
     }
 
-    if (invoice.getCreatedDate() != null) {
-      graphics.drawString(
-          invoice.getCreatedDate(), customerXInvoice + distanceX, customerYInvoice - 15);
-    }
-
-    if (invoice.getCustomer().getAddress() != null) {
-      customerYInvoice = customerYInvoice + gap;
-      graphics.drawString(
-          "" + invoice.getCustomer().getAddress(), customerXInvoice, customerYInvoice);
-      // startY = startY + 10;
-    }
+//    if (invoice.getCustomer().getAddress() != null) {
+//      customerYInvoice = customerYInvoice + gap;
+//      graphics.drawString(
+//          "" + invoice.getCustomer().getAddress(), customerXInvoice, customerYInvoice);
+//      // startY = startY + 10;
+//    }
 
     if (invoice.getCustomer().getEmail() != null) {
       customerYInvoice = customerYInvoice + gap;
@@ -107,15 +107,11 @@ public class MobilePrint implements Printable {
       for (MobileOrderCreateResponseList.InvoiceData.OrderItemData orderItem :
           invoice.getOrderItems()) {
 
-        orderItemXInvoice = startX;
-
-        /*graphics.drawString(
-            orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice - 15);*/
-
-        graphics.drawString("" + orderItem.getQuantity(), orderItemXInvoice, orderItemYInvoice);
-        orderItemXInvoice = orderItemXInvoice + 50;
+        orderItemXInvoice = startX ;
+        //graphics.drawString(orderItem.getQuantity().toString(), orderItemXInvoice, orderItemYInvoice);
+        //orderItemXInvoice = orderItemXInvoice + 50;
         graphics.drawString(
-            "" + orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
+          orderItem.getQuantity().toString() +"-" + orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
 
         orderItemXInvoice = orderItemXInvoice + 60;
         if (orderItem.getReturnType() != null) {
@@ -132,35 +128,13 @@ public class MobilePrint implements Printable {
             graphics.drawString("" + "SEPARATEPACK", orderItemXInvoice, orderItemYInvoice);
           }
         }
-        orderItemXInvoice = orderItemXInvoice + 120;
+        orderItemXInvoice = orderItemXInvoice + 140;
         graphics.drawString("" + orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
         orderItemXInvoice = orderItemXInvoice + 45;
         graphics.drawString("" + orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice);
         orderItemYInvoice = orderItemYInvoice + gap;
       }
       orderItemXInvoice = startX;
-      System.out.println("invoice.getReturnHanger -->" + invoice.getReturnHanger());
-      if (invoice.getReturnHanger() != null && invoice.getReturnHanger() != 0) {
-        orderItemYInvoice = orderItemYInvoice + gap;
-        graphics.drawString("Return Hangers : ", startX, orderItemYInvoice);
-        orderItemXInvoice = startX + gapX;
-        graphics.drawString(
-            invoice.getReturnHangerAmount() + "(" + invoice.getReturnHanger() + ")",
-            orderItemXInvoice,
-            orderItemYInvoice);
-        // orderItemXInvoice = startX;
-      }
-      System.out.println("invoice.getIssuedHanger -->" + invoice.getIssuedHanger());
-      if (invoice.getIssuedHanger() != null && invoice.getIssuedHanger() != 0) {
-        orderItemYInvoice = orderItemYInvoice + gap;
-        graphics.drawString("Issued Hangers : ", startX, orderItemYInvoice);
-        orderItemXInvoice = startX + gapX;
-        graphics.drawString(
-            invoice.getIssuedHangerAmount() + "(" + invoice.getIssuedHanger() + ")",
-            orderItemXInvoice,
-            orderItemYInvoice);
-        // orderItemXInvoice = startX;
-      }
 
       System.out.println("invoice.getDiscount -->" + invoice.getDiscount());
       if (invoice.getDiscount() != null && invoice.getDiscount().signum() != 0) {
@@ -184,18 +158,18 @@ public class MobilePrint implements Printable {
       orderItemYInvoice = orderItemYInvoice + 40;
       graphics.drawString("Total Qty", startX, orderItemYInvoice);
       orderItemXInvoice = startX + gapX;
-      graphics.drawString("" + invoice.getTotalQuantity(), orderItemXInvoice, orderItemYInvoice);
+      graphics.drawString("" + invoice.getTotalQuantity(), orderItemXInvoice-15, orderItemYInvoice);
       orderItemYInvoice = orderItemYInvoice + gap;
 
       graphics.drawString("Gross Total", startX, orderItemYInvoice);
       orderItemXInvoice = startX + gapX;
-      graphics.drawString("" + invoice.getGrossTotal(), orderItemXInvoice, orderItemYInvoice);
+      graphics.drawString("" + invoice.getGrossTotal(), orderItemXInvoice-15, orderItemYInvoice);
 
       orderItemYInvoice = orderItemYInvoice + gap;
       graphics.drawString("Total", startX, orderItemYInvoice);
 
       orderItemXInvoice = startX + gapX;
-      graphics.drawString("" + invoice.getNetAmount(), orderItemXInvoice, orderItemYInvoice);
+      graphics.drawString("" + invoice.getNetAmount(), orderItemXInvoice-15, orderItemYInvoice);
       orderItemXInvoice = startX;
 
       if (invoice.getPayments() != null && invoice.getPayments().size() > 0) {
@@ -256,7 +230,7 @@ public class MobilePrint implements Printable {
           "FOC Amount : " + invoice.getRemainFocAmount(), footerXInvoice, footerYInvoice);
     }
     System.out.println("invoice.getFreeWash -->" + invoice.getFreeWash());
-    if (invoice.getFreeWash() != null) {
+    if (invoice.getFreeWash() != null && invoice.getFreeWash() != 0) {
       footerYInvoice = footerYInvoice + gap;
       graphics.drawString("Free Wash : " + invoice.getFreeWash(), footerXInvoice, footerYInvoice);
     }
