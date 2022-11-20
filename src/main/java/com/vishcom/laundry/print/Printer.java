@@ -100,8 +100,8 @@ public class Printer implements Printable {
             graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-15);
         }
 
-        if(invoice.getCreatedDate() != null) {
-            graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-15);
+        if(invoice.getDeliveryDate() != null) {
+            graphics.drawString(invoice.getDeliveryDate(), customerXInvoice+distanceX, customerYInvoice-15);
         }
 
         if(invoice.getCustomer().getAddress() != null) {
