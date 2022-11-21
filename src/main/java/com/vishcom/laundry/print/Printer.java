@@ -32,7 +32,7 @@ public class Printer implements Printable {
     int gap=0;
     int distanceX = 0;
 
-    int gapX = 260;
+    int gapX = 275;
 
 
     public Printer(OrderCreateResponseList.InvoiceData invoice) {
@@ -44,30 +44,23 @@ public class Printer implements Printable {
 
 
     @Override
-    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+    public int print(Graphics graphics, PageFormat format, int pageIndex) throws PrinterException {
 
-        startX = 35;
-        startY = 150;
-        //startY = 142;
-
-
-        //startYInvoice =515;
-        //startXInvoice =80;
-
-        //startYInvoiceNum =145;
+        startX = 95;
+        startY = 120;
         startXInvoiceNum =startX + 245;
 
-        customerYInvoice = startY + 20;
+        customerYInvoice = startY + 5;
         customerXInvoice = startX + 5;
 
         orderItemYInvoice = startY + 105;
-        orderItemXInvoice = startX;
+        orderItemXInvoice = startX-10;
 
         footerYInvoice = startY + 300;
         footerXInvoice = startX;
 
         gap=15;
-        distanceX = 175;
+        distanceX = 170;
 
         if (pageIndex > 0) {
             return NO_SUCH_PAGE;
@@ -75,40 +68,51 @@ public class Printer implements Printable {
 
         //double margin = 1 * 72;
 
-        Paper paper = pageFormat.getPaper();
+        Paper paper = format.getPaper();
         //Remove borders from the paper
-        //paper.setImageableArea(30.0, 10.0, 500, 500);
-        pageFormat.setPaper(paper);
+        //paper.setImageableArea(0.0, 0.0, 800, 600);
+        //paper.setImageableArea(0.0, 0.0, format.getPaper().getWidth(), format.getPaper().getHeight());
+        /*double width = 9d * 72d;
+        double height = 9d * 72d;
+        double margin = 0;
+        paper.setSize(width, height);
+        paper.setImageableArea(
+          margin,
+          0,
+          width - (margin * 2),
+          height);*/
+        format.setPaper(paper);
+        //format.setPaper(paper);
 
         Graphics2D g2d = (Graphics2D)graphics;
 
-        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+        g2d.translate(format.getImageableX(), format.getImageableY());
 
 
         //startYInvoice = startYInvoice + gap;
-        graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-70, startY+8);
+        //graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-60, startY+5);
         //graphics.drawString("Ord no :"+invoice.getId(), startXInvoiceNum, startY);
 
         if(invoice.getCustomer().getName() != null) {
-            graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice+5);
+            graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice);
             customerYInvoice = customerYInvoice + gap;
         }
 
         graphics.drawString(""+invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
 
         if(invoice.getCreatedDate() != null) {
-            graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-15);
+            graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-10);
         }
 
-        if(invoice.getDeliveryDate() != null) {
-            graphics.drawString(invoice.getDeliveryDate(), customerXInvoice+distanceX, customerYInvoice-15);
-        }
+        /*if(invoice.getDeliveryDate() != null) {
+            graphics.drawString(invoice.getDeliveryDate(), customerXInvoice+distanceX, customerYInvoice-5);
+        }*/
 
-        if(invoice.getCustomer().getAddress() != null) {
+        /*if(invoice.getCustomer().getAddress() != null) {
             customerYInvoice = customerYInvoice + gap;
             graphics.drawString(""+invoice.getCustomer().getAddress(), customerXInvoice, customerYInvoice);
             //startY = startY + 10;
-        }
+        }*/
 
         if(invoice.getCustomer().getEmail() != null) {
             customerYInvoice = customerYInvoice + gap;
@@ -121,18 +125,22 @@ public class Printer implements Printable {
             graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), customerXInvoice, customerYInvoice);
         }*/
 
+        graphics.drawString("Order receipt :"+invoice.getId(), customerXInvoice+70, customerYInvoice+30);
+
 
         customerYInvoice = customerYInvoice + gap;
+
         if(invoice.getOrderItems() != null &invoice.getOrderItems().size() > 0) {
 
             for (OrderCreateResponseList.InvoiceData.OrderItemData orderItem:invoice.getOrderItems()) {
 
                 orderItemXInvoice = startX;
 
-                graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-15);
-                graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice);
-                orderItemXInvoice= orderItemXInvoice+50;
-                graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice, orderItemYInvoice);
+                graphics.drawString(orderItem.getDeliveryTime(), customerXInvoice + distanceX, customerYInvoice-5);
+
+                graphics.drawString(""+orderItem.getQuantity() , orderItemXInvoice, orderItemYInvoice+5);
+                orderItemXInvoice= orderItemXInvoice+45;
+                graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice-20, orderItemYInvoice+5);
                 // FOLDPACK("FOLDPACK","FP"),NOCREASE("NOCREASE","NC"),ONHANGER("ONHANGER","OH"),WITHCREASE("WITHCREASE","WC"),SEPARATEPACK("SEPARATEPACK","SP");
 
 
@@ -152,10 +160,10 @@ public class Printer implements Printable {
                     }
 
                 }
-                orderItemXInvoice= orderItemXInvoice+120;
-                graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
+                orderItemXInvoice= orderItemXInvoice+125;
+                graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice+5);
                 orderItemXInvoice= orderItemXInvoice+45;
-                graphics.drawString(""+ orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice);
+                graphics.drawString(""+ orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice+5);
                 orderItemYInvoice = orderItemYInvoice + gap;
             }
             orderItemXInvoice = startX;
