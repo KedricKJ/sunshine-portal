@@ -112,26 +112,35 @@ public class Printer implements Printable {
                 // FOLDPACK("FOLDPACK","FP"),NOCREASE("NOCREASE","NC"),ONHANGER("ONHANGER","OH"),WITHCREASE("WITHCREASE","WC"),SEPARATEPACK("SEPARATEPACK","SP");
 
 
-                orderItemXInvoice= orderItemXInvoice+60;
+                orderItemXInvoice= orderItemXInvoice+25;
+                orderItemYInvoice = orderItemYInvoice + 5;
                 if(orderItem.getReturnType() != null) {
 
                     if(orderItem.getReturnType().equalsIgnoreCase("FP")) {
-                        graphics.drawString("" + "FOLDPACK", orderItemXInvoice, orderItemYInvoice);
+                        graphics.drawString("" + "(foldpack)", orderItemXInvoice, orderItemYInvoice);
                     } else if(orderItem.getReturnType().equalsIgnoreCase("NC")) {
-                        graphics.drawString("" + "NOCREASE", orderItemXInvoice, orderItemYInvoice);
+                        graphics.drawString("" + "(nocrea)", orderItemXInvoice, orderItemYInvoice);
                     } else if(orderItem.getReturnType().equalsIgnoreCase("OH")) {
-                        graphics.drawString("" + "ONHANGER", orderItemXInvoice, orderItemYInvoice);
+                        graphics.drawString("" + "(onhang)", orderItemXInvoice, orderItemYInvoice);
                     } else if(orderItem.getReturnType().equalsIgnoreCase("WC")) {
-                        graphics.drawString("" + "WITHCREASE", orderItemXInvoice, orderItemYInvoice);
+                        graphics.drawString("" + "(w/crea)", orderItemXInvoice, orderItemYInvoice);
                     }else if(orderItem.getReturnType().equalsIgnoreCase("SP")) {
-                        graphics.drawString("" + "SEPARATEPACK", orderItemXInvoice, orderItemYInvoice);
+                        graphics.drawString("" + "(s/pack)", orderItemXInvoice, orderItemYInvoice);
                     }
 
                 }
-                orderItemXInvoice= orderItemXInvoice+125;
-                graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice+5);
+                if(orderItem.getColor() != null) {
+                    graphics.drawString(""+orderItem.getColor(), orderItemXInvoice+50, orderItemYInvoice);
+                }
+                if(orderItem.getDamageType() != null) {
+                    graphics.drawString(""+orderItem.getDamageType(), orderItemXInvoice+120, orderItemYInvoice);
+                }
+
+
+                orderItemXInvoice= orderItemXInvoice+160;
+                graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
                 orderItemXInvoice= orderItemXInvoice+45;
-                graphics.drawString(""+ orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice+5);
+                graphics.drawString(""+ orderItem.getAmount(), orderItemXInvoice, orderItemYInvoice);
                 orderItemYInvoice = orderItemYInvoice + gap;
             }
             orderItemXInvoice = startX;
@@ -231,10 +240,10 @@ public class Printer implements Printable {
         footerYInvoice = footerYInvoice + gap;
         graphics.drawString(invoice.getType(), footerXInvoice, footerYInvoice);
 
-        if(invoice.getBranch() != null) {
+        /*if(invoice.getBranch() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Branch : "+invoice.getBranch(), footerXInvoice, footerYInvoice);
-        }
+        }*/
 
         /*if(invoice.getCustomer() != null) {
             footerYInvoice = footerYInvoice + gap;
@@ -254,13 +263,13 @@ public class Printer implements Printable {
             }
             if(invoice.getCustomer().getRemainFocAmount() != null) {
                 footerYInvoice = footerYInvoice + gap;
-                graphics.drawString("FOC Amount             :"+invoice.getCustomer().getRemainFocAmount(), footerXInvoice, footerYInvoice);
+                graphics.drawString("FOC Amount                  :"+invoice.getCustomer().getRemainFocAmount(), footerXInvoice, footerYInvoice);
             }
         }
 
         if(invoice.getBranchId() != null) {
             footerYInvoice = footerYInvoice + gap;
-            graphics.drawString("Branch : "+invoice.getBranch().toUpperCase()+"("+invoice.getBranchId().getContactNo()+")", footerXInvoice, footerYInvoice+100);
+            graphics.drawString("Branch : "+invoice.getBranch().toUpperCase()+" ("+invoice.getBranchId().getContactNo()+")", footerXInvoice, footerYInvoice+100);
         }
 
         if(invoice.getColor() != null) {

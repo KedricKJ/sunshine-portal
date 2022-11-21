@@ -109,11 +109,9 @@ public class OrderCreateResponseList {
 
             private String orderType;
 
-
             private String returnType;
 
             private String deliveryTime;
-
 
             private String deliveryType;
 
@@ -125,9 +123,14 @@ public class OrderCreateResponseList {
 
             private PaymentData payment;
 
+            private String color;
+
+            private String damageType;
+
+            private String damageLocation;
+
             @Data
             public static class ItemData  {
-
 
                 private String id;
 
