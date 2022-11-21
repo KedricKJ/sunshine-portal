@@ -65,41 +65,15 @@ public class Printer implements Printable {
         if (pageIndex > 0) {
             return NO_SUCH_PAGE;
         }
-
-        //double margin = 1 * 72;
-
         Paper paper = format.getPaper();
-        //Remove borders from the paper
-        //paper.setImageableArea(0.0, 0.0, 800, 600);
-        //paper.setImageableArea(0.0, 0.0, format.getPaper().getWidth(), format.getPaper().getHeight());
-        /*double width = 9d * 72d;
-        double height = 9d * 72d;
-        double margin = 0;
-        paper.setSize(width, height);
-        paper.setImageableArea(
-          margin,
-          0,
-          width - (margin * 2),
-          height);*/
         format.setPaper(paper);
-        //format.setPaper(paper);
-
         Graphics2D g2d = (Graphics2D)graphics;
-
         g2d.translate(format.getImageableX(), format.getImageableY());
-
-
-        //startYInvoice = startYInvoice + gap;
-        //graphics.drawString("Order receipt :"+invoice.getId(), startXInvoiceNum-60, startY+5);
-        //graphics.drawString("Ord no :"+invoice.getId(), startXInvoiceNum, startY);
-
         if(invoice.getCustomer().getName() != null) {
             graphics.drawString(invoice.getCustomer().getName(), customerXInvoice, customerYInvoice);
             customerYInvoice = customerYInvoice + gap;
         }
-
         graphics.drawString(""+invoice.getCustomer().getMobile(), customerXInvoice, customerYInvoice);
-
         if(invoice.getCreatedDate() != null) {
             graphics.drawString(invoice.getCreatedDate(), customerXInvoice+distanceX, customerYInvoice-10);
         }
@@ -119,14 +93,8 @@ public class Printer implements Printable {
             graphics.drawString(""+invoice.getCustomer().getEmail(), customerXInvoice, customerYInvoice);
             //startY = startY + 10;
         }
-
-        /*if(invoice.getCustomer() != null) {
-            customerYInvoice = customerYInvoice + gap;
-            graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), customerXInvoice, customerYInvoice);
-        }*/
-
-        graphics.drawString("Order receipt :"+invoice.getId(), customerXInvoice+70, customerYInvoice+30);
-
+        graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), customerXInvoice, customerYInvoice+30);
+        graphics.drawString("Order receipt :"+invoice.getId(), customerXInvoice+160, customerYInvoice+30);
 
         customerYInvoice = customerYInvoice + gap;
 
@@ -260,31 +228,39 @@ public class Printer implements Printable {
 
         }
 
-
-                /*startY = startY + 20;
-                graphics.drawString("BRANCH INVO :"+invoice.getBranch(), startX, startY);*/
-
-
         footerYInvoice = footerYInvoice + gap;
         graphics.drawString(invoice.getType(), footerXInvoice, footerYInvoice);
+
         if(invoice.getBranch() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Branch : "+invoice.getBranch(), footerXInvoice, footerYInvoice);
         }
 
-        if(invoice.getCustomer() != null) {
+        /*if(invoice.getCustomer() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
-        }
-        System.out.println("invoice.getRemainFocAmount -->"+invoice.getRemainFocAmount());
-        if(invoice.getRemainFocAmount() != null) {
+        }*/
+
+        if(invoice.getCustomer() != null) {
             footerYInvoice = footerYInvoice + gap;
-            graphics.drawString("FOC Amount : "+invoice.getRemainFocAmount(), footerXInvoice, footerYInvoice);
+            //graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
+            if(invoice.getCustomer().getRedeemTotalAmount() != null) {
+                footerYInvoice = footerYInvoice + gap;
+                graphics.drawString("Accumulated points Rs  :"+invoice.getCustomer().getRedeemTotalAmount(), footerXInvoice, footerYInvoice);
+            }
+            if(invoice.getCustomer().getFreeWash() != null) {
+                footerYInvoice = footerYInvoice + gap;
+                graphics.drawString("Number Of Free wash    :"+invoice.getCustomer().getFreeWash(), footerXInvoice, footerYInvoice);
+            }
+            if(invoice.getCustomer().getRemainFocAmount() != null) {
+                footerYInvoice = footerYInvoice + gap;
+                graphics.drawString("FOC Amount             :"+invoice.getCustomer().getRemainFocAmount(), footerXInvoice, footerYInvoice);
+            }
         }
-        System.out.println("invoice.getFreeWash -->"+invoice.getFreeWash());
-        if(invoice.getFreeWash() != null) {
+
+        if(invoice.getBranchId() != null) {
             footerYInvoice = footerYInvoice + gap;
-            graphics.drawString("Free Wash : "+invoice.getFreeWash(), footerXInvoice, footerYInvoice);
+            graphics.drawString("Branch : "+invoice.getBranch().toUpperCase()+"("+invoice.getBranchId().getContactNo()+")", footerXInvoice, footerYInvoice+100);
         }
 
         if(invoice.getColor() != null) {

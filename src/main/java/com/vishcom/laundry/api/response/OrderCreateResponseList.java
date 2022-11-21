@@ -74,6 +74,20 @@ public class OrderCreateResponseList {
 
         private String damageLocation;
 
+        private BranchData branchId;
+
+        @Data
+        public static class BranchData {
+
+            private Long id;
+
+            private String name;
+
+            private String code;
+
+            private String contactNo;
+        }
+
 
 
         @Data
@@ -167,6 +181,12 @@ public class OrderCreateResponseList {
             private String name;
 
             private String mobile;
+
+            private Integer freeWash=0;
+
+            private BigDecimal redeemTotalAmount;
+
+            private BigDecimal remainFocAmount;
 
         }
     }
