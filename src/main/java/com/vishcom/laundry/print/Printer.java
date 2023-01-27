@@ -100,29 +100,17 @@ public class Printer implements Printable {
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice-20, orderItemYInvoice+5);
                 orderItemXInvoice= orderItemXInvoice+25;
                 orderItemYInvoice = orderItemYInvoice + 5;
-                if(orderItem.getReturnType() != null) {
-                    graphics.drawString("" + orderItem.getReturnType(), orderItemXInvoice, orderItemYInvoice);
-                    /*if(orderItem.getReturnType().equalsIgnoreCase("FP")) {
-                        graphics.drawString("" + "(foldpack)", orderItemXInvoice, orderItemYInvoice);
-                    } else if(orderItem.getReturnType().equalsIgnoreCase("NC")) {
-                        graphics.drawString("" + "(nocrease)", orderItemXInvoice, orderItemYInvoice);
-                    } else if(orderItem.getReturnType().equalsIgnoreCase("OH")) {
-                        graphics.drawString("" + "(hanger)", orderItemXInvoice, orderItemYInvoice);
-                    } else if(orderItem.getReturnType().equalsIgnoreCase("WC")) {
-                        graphics.drawString("" + "(w/crease)", orderItemXInvoice, orderItemYInvoice);
-                    }else if(orderItem.getReturnType().equalsIgnoreCase("SP")) {
-                        graphics.drawString("" + "(s/pack)", orderItemXInvoice, orderItemYInvoice);
-                    }*/
-
-                }
+        /*if(orderItem.getReturnType() != null) {
+            graphics.drawString("" + orderItem.getReturnType(), orderItemXInvoice, orderItemYInvoice);
+        }*/
+                System.out.println("================ orderItem.getColor ================="+orderItem.getColor());
                 if(orderItem.getColor() != null) {
-                    graphics.drawString(""+orderItem.getColor(), orderItemXInvoice+50, orderItemYInvoice);
+                    graphics.drawString(""+orderItem.getColor(), orderItemXInvoice+65, orderItemYInvoice);
                 }
+                System.out.println("================ orderItem.getColor ================="+orderItem.getDamageType());
                 if(orderItem.getDamageType() != null) {
                     graphics.drawString(""+orderItem.getDamageType(), orderItemXInvoice+120, orderItemYInvoice);
                 }
-
-
                 orderItemXInvoice= orderItemXInvoice+163;
                 graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
                 orderItemXInvoice= orderItemXInvoice+45;
