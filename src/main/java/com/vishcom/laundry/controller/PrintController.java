@@ -181,9 +181,9 @@ public class PrintController {
         format.setPaper(paper);
         job.setPrintable(new MobilePrint(invoice),format);
         try {
-            log.info("invoices :"+"printing ...");
+            log.info("invoices :"+"Mobile Invoice printing ...");
             job.print();
-            log.info("invoices :"+"printed ...");
+            log.info("invoices :"+"Mobile printed ...");
         } catch (PrinterException e) {
             e.printStackTrace();
         }
