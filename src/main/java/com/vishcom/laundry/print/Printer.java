@@ -231,7 +231,7 @@ public class Printer implements Printable {
             graphics.drawString("Branch Contact : "+invoice.getBranchId().getContactNo(), footerXInvoice, footerYInvoice+115);
         }
 
-        if(invoice.getColor() != null) {
+        /*if(invoice.getColor() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Color : "+invoice.getColor(), footerXInvoice, footerYInvoice);
         }
@@ -243,7 +243,7 @@ public class Printer implements Printable {
         if(invoice.getDamageLocation() != null) {
             footerYInvoice = footerYInvoice + gap;
             graphics.drawString("Damage Location : "+invoice.getDamageLocation(), footerXInvoice, footerYInvoice);
-        }
+        }*/
 
         return PAGE_EXISTS;
     }
