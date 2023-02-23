@@ -100,9 +100,7 @@ public class Printer implements Printable {
                 graphics.drawString(""+orderItem.getItem().getName(), orderItemXInvoice-20, orderItemYInvoice+5);
                 orderItemXInvoice= orderItemXInvoice+25;
                 orderItemYInvoice = orderItemYInvoice + 5;
-        /*if(orderItem.getReturnType() != null) {
-            graphics.drawString("" + orderItem.getReturnType(), orderItemXInvoice, orderItemYInvoice);
-        }*/
+
                 System.out.println("================ orderItem.getColor ================="+orderItem.getColor());
                 if(orderItem.getColor() != null) {
                     graphics.drawString(""+orderItem.getColor(), orderItemXInvoice+65, orderItemYInvoice);
@@ -110,6 +108,9 @@ public class Printer implements Printable {
                 System.out.println("================ orderItem.getColor ================="+orderItem.getDamageType());
                 if(orderItem.getDamageType() != null) {
                     graphics.drawString(""+orderItem.getDamageType(), orderItemXInvoice+120, orderItemYInvoice);
+                }
+                if(orderItem.getReturnType() != null) {
+                    graphics.drawString("" + orderItem.getReturnType(), orderItemXInvoice+150, orderItemYInvoice);
                 }
                 orderItemXInvoice= orderItemXInvoice+163;
                 graphics.drawString(""+orderItem.getUnitPrice(), orderItemXInvoice, orderItemYInvoice);
