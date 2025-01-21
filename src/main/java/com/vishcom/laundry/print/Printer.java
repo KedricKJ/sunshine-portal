@@ -209,17 +209,18 @@ public class Printer implements Printable {
         footerYInvoice = footerYInvoice + gap;
         graphics.drawString(invoice.getType(), footerXInvoice, footerYInvoice);
 
+        /*Remove the free wash part from printing bill - Mon, Jan 20, 11:23 AM (1 day ago)*/
         if(invoice.getCustomer() != null) {
             footerYInvoice = footerYInvoice + gap;
             //graphics.drawString("Customer ID : "+invoice.getCustomer().getId(), footerXInvoice, footerYInvoice);
-            if(invoice.getCustomer().getRedeemTotalAmount() != null && invoice.getCustomer().getRedeemTotalAmount().compareTo(BigDecimal.ZERO) != 0) {
+            /*if(invoice.getCustomer().getRedeemTotalAmount() != null && invoice.getCustomer().getRedeemTotalAmount().compareTo(BigDecimal.ZERO) != 0) {
                 footerYInvoice = footerYInvoice + gap;
                 graphics.drawString("Accumulated points Rs  :"+invoice.getCustomer().getRedeemTotalAmount(), footerXInvoice, footerYInvoice);
-            }
-            if(invoice.getCustomer().getFreeWash() != null && invoice.getCustomer().getFreeWash() != 0) {
+            }*/
+            /*if(invoice.getCustomer().getFreeWash() != null && invoice.getCustomer().getFreeWash() != 0) {
                 footerYInvoice = footerYInvoice + gap;
                 graphics.drawString("Number Of Free wash    :"+invoice.getCustomer().getFreeWash(), footerXInvoice, footerYInvoice);
-            }
+            }*/
             if(invoice.getCustomer().getRemainFocAmount() != null && invoice.getCustomer().getRemainFocAmount().compareTo(BigDecimal.ZERO) != 0) {
                 footerYInvoice = footerYInvoice + gap;
                 graphics.drawString("FOC Amount                  :"+invoice.getCustomer().getRemainFocAmount(), footerXInvoice, footerYInvoice);
